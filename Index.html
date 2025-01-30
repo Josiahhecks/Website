@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebhookMaster</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header data-aos="fade-down">
+            <h1>WebhookMaster</h1>
+            <p class="tagline">Customize your Discord server in style</p>
+        </header>
+        
+        <main>
+            <div class="webhook-form" data-aos="fade-up">
+                <input type="url" id="webhookUrl" placeholder="Enter Webhook URL">
+                <textarea id="message" placeholder="Your message here..."></textarea>
+                <div class="controls">
+                    <button id="sendBtn">Send Message</button>
+                    <button id="clearBtn">Clear All</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
