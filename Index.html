@@ -8,33 +8,33 @@
     <style>
         /* Glassmorphism Effect */
         .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
             border-radius: 12px;
             padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        /* Dark mode toggle */
+        /* Dark mode */
         .dark-mode {
             background-color: #1a1a2e;
             color: white;
         }
         .dark-mode .glass {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 transition-all duration-300">
 
-    <!-- Navigation -->
+    <!-- Navbar -->
     <div class="flex justify-between items-center p-4 bg-gray-800 text-white">
         <h1 class="text-2xl font-bold">WebhookMaster</h1>
-        <button onclick="toggleDarkMode()" class="bg-purple-500 px-4 py-2 rounded-lg shadow-md hover:bg-purple-600">
-            🌙/☀️
+        <button id="theme-toggle" onclick="toggleDarkMode()" class="bg-purple-500 px-4 py-2 rounded-lg shadow-md hover:bg-purple-600">
+            🌙
         </button>
     </div>
 
-    <!-- Main Content -->
+    <!-- Webhook Input -->
     <div class="max-w-2xl mx-auto mt-10 glass p-6 dark-mode">
         <h2 class="text-xl font-semibold mb-4">Create Message</h2>
 
@@ -45,6 +45,22 @@
         <label class="block mt-4 mb-2 font-medium">Message Content</label>
         <textarea id="message" rows="3" class="w-full p-3 rounded-md border dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-white"
             placeholder="Type your message here..."></textarea>
+
+        <label class="block mt-4 mb-2 font-medium">Attach Image (optional)</label>
+        <input id="file-input" type="file" class="w-full p-2 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+
+        <!-- Embed Section -->
+        <div class="mt-4">
+            <h3 class="text-lg font-semibold">Embed Options</h3>
+            <label class="block mt-2">Title:</label>
+            <input id="embed-title" type="text" class="w-full p-2 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+            
+            <label class="block mt-2">Description:</label>
+            <textarea id="embed-description" rows="2" class="w-full p-2 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white"></textarea>
+            
+            <label class="block mt-2">Embed Color:</label>
+            <input id="embed-color" type="color" class="w-20 h-10 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
+        </div>
 
         <div class="flex mt-4 gap-2">
             <button onclick="sendMessage()" class="bg-blue-500 px-4 py-2 rounded-lg text-white shadow-md hover:bg-blue-600">
@@ -77,41 +93,77 @@
     <script>
         function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
+            let btn = document.getElementById("theme-toggle");
+            if (document.body.classList.contains("dark-mode")) {
+                btn.textContent = "☀️"; // Switch to light mode
+            } else {
+                btn.textContent = "🌙"; // Switch to dark mode
+            }
         }
 
         function sendMessage() {
             let webhookUrl = document.getElementById("webhook-url").value;
             let message = document.getElementById("message").value;
+            let embedTitle = document.getElementById("embed-title").value;
+            let embedDescription = document.getElementById("embed-description").value;
+            let embedColor = document.getElementById("embed-color").value.replace("#", ""); // Convert color
+            let fileInput = document.getElementById("file-input").files[0];
 
-            if (!webhookUrl || !message) {
-                alert("Please enter both the webhook URL and message!");
+            if (!webhookUrl) {
+                alert("Please enter a webhook URL!");
                 return;
+            }
+
+            let payload = {
+                content: message || null,
+                embeds: embedTitle || embedDescription ? [{
+                    title: embedTitle || null,
+                    description: embedDescription || null,
+                    color: embedColor ? parseInt(embedColor, 16) : null
+                }] : []
+            };
+
+            let formData = new FormData();
+            formData.append("payload_json", JSON.stringify(payload));
+
+            if (fileInput) {
+                formData.append("file", fileInput);
             }
 
             fetch(webhookUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ content: message })
+                body: formData
             })
             .then(response => response.json())
-            .then(data => alert("Message sent successfully!"))
-            .catch(error => alert("Error sending message!"));
+            .then(() => alert("Message sent successfully!"))
+            .catch(() => alert("Error sending message!"));
         }
 
         function clearMessage() {
             document.getElementById("message").value = "";
+            document.getElementById("embed-title").value = "";
+            document.getElementById("embed-description").value = "";
+            document.getElementById("embed-color").value = "#ffffff";
+            document.getElementById("file-input").value = "";
             document.getElementById("preview").innerHTML = "<p class='text-gray-500 italic'>Your message will appear here...</p>";
         }
 
         function previewMessage() {
             let message = document.getElementById("message").value;
-            if (message) {
-                document.getElementById("preview").innerHTML = `<div class='p-3 rounded-lg bg-gray-300 dark:bg-gray-700'>
-                    <strong class="text-blue-500">User:</strong> ${message}
+            let embedTitle = document.getElementById("embed-title").value;
+            let embedDescription = document.getElementById("embed-description").value;
+
+            let previewContent = `<strong class='text-blue-500'>User:</strong> ${message}`;
+            if (embedTitle || embedDescription) {
+                previewContent += `<div class='p-3 mt-2 rounded-lg bg-gray-300 dark:bg-gray-700'>
+                    <strong>${embedTitle}</strong><br>
+                    ${embedDescription}
                 </div>`;
             }
+
+            document.getElementById("preview").innerHTML = previewContent;
         }
     </script>
 
 </body>
-    </html>
+</html>
