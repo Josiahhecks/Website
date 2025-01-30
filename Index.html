@@ -3,28 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebhookMaster</title>
+    <title>WebhookMaster Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
+    <div class="loading">
+        <div class="loading-circle"></div>
+    </div>
+    
+    <div id="particles-js"></div>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
     <div class="container">
         <header data-aos="fade-down">
-            <h1>WebhookMaster</h1>
-            <p class="tagline">Customize your Discord server in style</p>
+            <div class="logo-container">
+                <div class="logo">WM</div>
+            </div>
+            <h1>WebhookMaster </h1>
+            <p class="tagline">Ultimate Discord Webhook Management</p>
         </header>
         
         <main>
             <div class="webhook-form" data-aos="fade-up">
-                <input type="url" id="webhookUrl" placeholder="Enter Webhook URL">
-                <textarea id="message" placeholder="Your message here..."></textarea>
-                <div class="controls">
-                    <button id="sendBtn">Send Message</button>
-                    <button id="clearBtn">Clear All</button>
+                <div class="form-header">
+                    <h2>Create Message</h2>
+                    <div class="theme-switcher">
+                        <button class="theme-btn" data-theme="dark">🌙</button>
+                        <button class="theme-btn" data-theme="light">☀️</button>
+                    </div>
                 </div>
+                
+                <div class="input-group">
+                    <label>Webhook URL</label>
+                    <input type="url" id="webhookUrl" placeholder="Enter your Discord webhook URL">
+                </div>
+                
+                <div class="input-group">
+                    <label>Message Content</label>
+                    <textarea id="message" placeholder="Type your message here..."></textarea>
+                </div>
+                
+                <div class="embed-section">
+                    <button id="addEmbed" class="accent-btn">+ Add Embed</button>
+                    <div id="embedContainer"></div>
+                </div>
+                
+                <div class="controls">
+                    <button id="sendBtn" class="primary-btn">Send Message</button>
+                    <button id="clearBtn" class="secondary-btn">Clear All</button>
+                    <button id="previewBtn" class="accent-btn">Preview</button>
+                </div>
+            </div>
+            
+            <div class="preview-panel" id="previewPanel">
+                <h3>Message Preview</h3>
+                <div class="preview-content"></div>
             </div>
         </main>
     </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Made with 💜 by WebhookMaster Team</p>
+            <div class="social-links">
+                <a href="#" class="social-btn">GitHub</a>
+                <a href="#" class="social-btn">Discord</a>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="app.js"></script>
 </body>
