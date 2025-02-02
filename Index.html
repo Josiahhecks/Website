@@ -3,167 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebhookMaster</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>INJU</title>
     <style>
-        /* Glassmorphism Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        /* Dark mode */
-        .dark-mode {
-            background-color: #1a1a2e;
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            background: radial-gradient(circle, #0a0a0a 30%, #000000 90%);
             color: white;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
         }
-        .dark-mode .glass {
-            background: rgba(0, 0, 0, 0.4);
+
+        h1 {
+            font-size: 4rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            margin-bottom: 50px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 80%;
+        }
+
+        .button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            margin: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.6);
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .button:hover {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+            transform: scale(1.1);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 transition-all duration-300">
+<body>
 
-    <!-- Navbar -->
-    <div class="flex justify-between items-center p-4 bg-gray-800 text-white">
-        <h1 class="text-2xl font-bold">WebhookMaster</h1>
-        <button id="theme-toggle" onclick="toggleDarkMode()" class="bg-purple-500 px-4 py-2 rounded-lg shadow-md hover:bg-purple-600">
-            🌙
-        </button>
+    <img class="logo" src="https://via.placeholder.com/100" alt="INJU Logo">
+    <h1>INJU</h1>
+
+    <div class="container">
+        <a href="#" class="button">YOUTUBE</a>
+        <a href="#" class="button">DISCORD</a>
+        <a href="#" class="button">TROUBLESHOOT</a>
+        <a href="#" class="button">AUTOHAR</a>
+        <a href="#" class="button">REFRESHER</a>
     </div>
-
-    <!-- Webhook Input -->
-    <div class="max-w-2xl mx-auto mt-10 glass p-6 dark-mode">
-        <h2 class="text-xl font-semibold mb-4">Create Message</h2>
-
-        <label class="block mb-2 font-medium">Webhook URL</label>
-        <input id="webhook-url" type="text" class="w-full p-3 rounded-md border dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-white"
-            placeholder="https://discord.com/api/webhooks/..." />
-
-        <label class="block mt-4 mb-2 font-medium">Message Content</label>
-        <textarea id="message" rows="3" class="w-full p-3 rounded-md border dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-white"
-            placeholder="Type your message here..."></textarea>
-
-        <label class="block mt-4 mb-2 font-medium">Attach Image (optional)</label>
-        <input id="file-input" type="file" class="w-full p-2 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
-
-        <!-- Embed Section -->
-        <div class="mt-4">
-            <h3 class="text-lg font-semibold">Embed Options</h3>
-            <label class="block mt-2">Title:</label>
-            <input id="embed-title" type="text" class="w-full p-2 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
-            
-            <label class="block mt-2">Description:</label>
-            <textarea id="embed-description" rows="2" class="w-full p-2 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white"></textarea>
-            
-            <label class="block mt-2">Embed Color:</label>
-            <input id="embed-color" type="color" class="w-20 h-10 border rounded-md dark:border-gray-700 dark:bg-gray-800 dark:text-white" />
-        </div>
-
-        <div class="flex mt-4 gap-2">
-            <button onclick="sendMessage()" class="bg-blue-500 px-4 py-2 rounded-lg text-white shadow-md hover:bg-blue-600">
-                🚀 Send Message
-            </button>
-            <button onclick="clearMessage()" class="bg-gray-500 px-4 py-2 rounded-lg text-white shadow-md hover:bg-gray-600">
-                🗑 Clear All
-            </button>
-            <button onclick="previewMessage()" class="bg-green-500 px-4 py-2 rounded-lg text-white shadow-md hover:bg-green-600">
-                👀 Preview
-            </button>
-        </div>
-    </div>
-
-    <!-- Message Preview -->
-    <div class="max-w-2xl mx-auto mt-6 glass p-6">
-        <h2 class="text-xl font-semibold">Message Preview</h2>
-        <div id="preview" class="mt-4 p-3 rounded-md bg-gray-200 dark:bg-gray-800 text-black dark:text-white min-h-[50px]">
-            <p class="text-gray-500 italic">Your message will appear here...</p>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="text-center text-gray-600 dark:text-gray-400 mt-10 pb-6">
-        Made with 💜 by WebhookMaster Team <br />
-        <a href="#" class="text-blue-500 hover:underline">GitHub</a> | 
-        <a href="#" class="text-purple-500 hover:underline">Discord</a>
-    </footer>
-
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-            let btn = document.getElementById("theme-toggle");
-            if (document.body.classList.contains("dark-mode")) {
-                btn.textContent = "☀️"; // Switch to light mode
-            } else {
-                btn.textContent = "🌙"; // Switch to dark mode
-            }
-        }
-
-        function sendMessage() {
-            let webhookUrl = document.getElementById("webhook-url").value;
-            let message = document.getElementById("message").value;
-            let embedTitle = document.getElementById("embed-title").value;
-            let embedDescription = document.getElementById("embed-description").value;
-            let embedColor = document.getElementById("embed-color").value.replace("#", ""); // Convert color
-            let fileInput = document.getElementById("file-input").files[0];
-
-            if (!webhookUrl) {
-                alert("Please enter a webhook URL!");
-                return;
-            }
-
-            let payload = {
-                content: message || null,
-                embeds: embedTitle || embedDescription ? [{
-                    title: embedTitle || null,
-                    description: embedDescription || null,
-                    color: embedColor ? parseInt(embedColor, 16) : null
-                }] : []
-            };
-
-            let formData = new FormData();
-            formData.append("payload_json", JSON.stringify(payload));
-
-            if (fileInput) {
-                formData.append("file", fileInput);
-            }
-
-            fetch(webhookUrl, {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(() => alert("Message sent successfully!"))
-            .catch(() => alert("Error sending message!"));
-        }
-
-        function clearMessage() {
-            document.getElementById("message").value = "";
-            document.getElementById("embed-title").value = "";
-            document.getElementById("embed-description").value = "";
-            document.getElementById("embed-color").value = "#ffffff";
-            document.getElementById("file-input").value = "";
-            document.getElementById("preview").innerHTML = "<p class='text-gray-500 italic'>Your message will appear here...</p>";
-        }
-
-        function previewMessage() {
-            let message = document.getElementById("message").value;
-            let embedTitle = document.getElementById("embed-title").value;
-            let embedDescription = document.getElementById("embed-description").value;
-
-            let previewContent = `<strong class='text-blue-500'>User:</strong> ${message}`;
-            if (embedTitle || embedDescription) {
-                previewContent += `<div class='p-3 mt-2 rounded-lg bg-gray-300 dark:bg-gray-700'>
-                    <strong>${embedTitle}</strong><br>
-                    ${embedDescription}
-                </div>`;
-            }
-
-            document.getElementById("preview").innerHTML = previewContent;
-        }
-    </script>
 
 </body>
 </html>
