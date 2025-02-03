@@ -77,8 +77,8 @@
     /* Buttons */
     .buttons {
       position: absolute;
-      width: 450px; /* Increased to accommodate larger buttons */
-      height: 450px; /* Increased to accommodate larger buttons */
+      width: 450px;
+      height: 450px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -87,8 +87,8 @@
 
     .button {
       position: absolute;
-      width: 100px; /* Increased button size */
-      height: 100px; /* Increased button size */
+      width: 100px;
+      height: 100px;
       border: 2px solid black;
       border-radius: 50%;
       display: flex;
@@ -102,6 +102,7 @@
       background-color: white;
       color: black;
       z-index: 2;
+      text-decoration: none;
     }
 
     .button:hover {
@@ -115,7 +116,7 @@
       transform: scale(0.9);
     }
 
-    /* Tooltip for Button Usage */
+    /* Tooltip */
     .tooltip {
       position: absolute;
       top: 120%;
@@ -137,34 +138,11 @@
       opacity: 1;
     }
 
-    /* Glow Effect for Title */
-    .title::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 50%);
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      animation: glow 3s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% {
-        opacity: 0.5;
-      }
-      50% {
-        opacity: 1;
-      }
-    }
-
     /* Connecting Lines */
     .lines {
       position: absolute;
-      width: 450px; /* Increased to match button container */
-      height: 450px; /* Increased to match button container */
+      width: 450px;
+      height: 450px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -218,9 +196,7 @@
 </head>
 <body>
   <div class="background"></div>
-  <div class="particles">
-    <!-- Particles are dynamically generated via JavaScript -->
-  </div>
+  <div class="particles"></div>
   <div class="container">
     <div class="title">INJU</div>
     <div class="lines">
@@ -232,44 +208,33 @@
       <div class="line" style="transform: rotate(300deg);"></div>
     </div>
     <div class="buttons">
-      <div class="button" style="transform: rotate(0deg) translate(225px) rotate(0deg);">
-        YOUTUBE
-        <div class="tooltip">Watch tutorials and videos</div>
-      </div>
-      <div class="button" style="transform: rotate(60deg) translate(225px) rotate(-60deg);">
-        DISCORD
-        <div class="tooltip">Join the community</div>
-      </div>
-      <div class="button" style="transform: rotate(120deg) translate(225px) rotate(-120deg);">
-        AUTOHAR
-        <div class="tooltip">Automate tasks</div>
-      </div>
-      <div class="button" style="transform: rotate(180deg) translate(225px) rotate(-180deg);">
-        REFRESHER
-        <div class="tooltip">Refresh your knowledge</div>
-      </div>
-      <div class="button" style="transform: rotate(240deg) translate(225px) rotate(-240deg);">
-        TROUBLESHOOT
-        <div class="tooltip">Fix issues and bugs</div>
-      </div>
-      <div class="button" style="transform: rotate(300deg) translate(225px) rotate(-300deg);">
+      <a href="https://inju.cc/u/MainControlPage" class="button" style="transform: rotate(0deg) translate(225px) rotate(0deg);" target="_blank">
         INJU.CC
         <div class="tooltip">Visit the official website</div>
-      </div>
+      </a>
+      <a href="https://discord.gg/injuv3" class="button" style="transform: rotate(60deg) translate(225px) rotate(-60deg);" target="_blank">
+        DISCORD
+        <div class="tooltip">Join the community</div>
+      </a>
+      <a href="https://bloxtools.ca/controlPage/create/" class="button" style="transform: rotate(120deg) translate(225px) rotate(-120deg);" target="_blank">
+        AUTOHAR
+        <div class="tooltip">Automate tasks</div>
+      </a>
+      <a href="https://inju.cc/tools/refresher" class="button" style="transform: rotate(180deg) translate(225px) rotate(-180deg);" target="_blank">
+        REFRESHER
+        <div class="tooltip">Refresh your knowledge</div>
+      </a>
+      <a href="https://discord.com/channels/1286805719911370783/1333224210398445588" class="button" style="transform: rotate(240deg) translate(225px) rotate(-240deg);" target="_blank">
+        TROUBLESHOOT
+        <div class="tooltip">Fix issues and bugs</div>
+      </a>
+      <a href="https://www.youtube.com/" class="button" style="transform: rotate(300deg) translate(225px) rotate(-300deg);" target="_blank">
+        YOUTUBE
+        <div class="tooltip">Watch tutorials and videos</div>
+      </a>
     </div>
   </div>
   <script>
-    // Add click effects to buttons
-    const buttons = document.querySelectorAll('.button');
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        button.style.transform = `${button.style.transform} scale(0.9)`;
-        setTimeout(() => {
-          button.style.transform = button.style.transform.replace(' scale(0.9)', '');
-        }, 200);
-      });
-    });
-
     // Generate particles
     const particlesContainer = document.querySelector('.particles');
     for (let i = 0; i < 50; i++) {
